@@ -24,11 +24,19 @@ class Book < ActiveRecord::Base
   after_destroy do |book|
     Rails.logger.info "Book is deleted: #{book.attributes.inspect}"
   end
-
-
-  def add_lovely_to_dog
-    self.name = self.name.gsub(/Dog/) do |matched|
-      "lovely #{matched}"
-    end
+  after_destroy :if => :high_price? do |book|
+    Rails.logger.warn "Book with high price is deleted: #{book.attributes.inspect}"
+    Rails.logger.warn "Please check!!"
   end
+
+  private
+    def add_lovely_to_dog
+     self.name = self.name.gsub(/Dog/) do |matched|
+       "lovely #{matched}"
+     end
+    end
+
+    def high_price?
+      self.price >= 5000
+    end
 end
