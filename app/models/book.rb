@@ -20,8 +20,11 @@ class Book < ActiveRecord::Base
       "lovely #{matched}"
     end
   end
-
   before_validation :add_lovely_to_dog
+  after_destroy do |book|
+    Rails.logger.info "Book is deleted: #{book.attributes.inspect}"
+  end
+
 
   def add_lovely_to_dog
     self.name = self.name.gsub(/Dog/) do |matched|
