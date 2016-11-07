@@ -28,6 +28,10 @@ class Book < ActiveRecord::Base
     Rails.logger.warn "Book with high price is deleted: #{book.attributes.inspect}"
     Rails.logger.warn "Please check!!"
   end
+  # book.reservation?でtrue or falseが取れたり、book.statusでreservationが取れたりできる。実際の数字はbook[:status]で取り出す
+  enum status: %w(reservation now_on_sale end_of_print)
+  # 明示的にDBで使用される数値を指定する場合
+  #enum status: %w(reservation: 0, now_on_sale: 1, end_of_print: 2)
 
   private
     def add_lovely_to_dog
