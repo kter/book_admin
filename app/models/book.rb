@@ -28,6 +28,8 @@ class Book < ActiveRecord::Base
     Rails.logger.warn "Book with high price is deleted: #{book.attributes.inspect}"
     Rails.logger.warn "Please check!!"
   end
+  enum status: %w(reservation now_on_sale end_of_print)
+  #enum status: %w(reservation: 0, now_on_sale: 1, end_of_print: 2)
 
   private
     def add_lovely_to_dog
